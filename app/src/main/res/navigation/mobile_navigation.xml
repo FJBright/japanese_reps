@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.japanese_reps.ui.home.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_fragment_flashcards"
+            app:destination="@id/fragment_flashcards"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_lists2"
+            app:destination="@id/navigation_lists2"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lists"
+        android:name="com.example.japanese_reps.ui.lists.FragmentLists"
+        android:label="@string/title_lists"
+        tools:layout="@layout/fragment_lists" >
+        <action
+            android:id="@+id/action_navigation_lists_to_fragment_flashcards"
+            app:destination="@id/fragment_flashcards"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lists2"
+        android:name="com.example.japanese_reps.ui.home.random.FragmentFlashCard"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_random_word_recycler"/>
+
+    <fragment
+        android:id="@+id/fragment_flashcards"
+        android:label="@string/flash_card_list"
+        android:name="com.example.japanese_reps.ui.lists.flashcards_list.FragmentFlashCard"
+        tools:layout="@layout/fragment_flashcards_recycler">
+        <action
+            android:id="@+id/action_fragment_flashcards_to_individualFlashcard"
+            app:destination="@id/individualFlashcard"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/individualFlashcard"
+        android:label="@string/app_name"
+        android:name="com.example.japanese_reps.ui.lists.flipcards.ExampleCard"
+        tools:layout="@layout/fragment_card">
+        <action
+            android:id="@+id/action_individualFlashcard_self1"
+            app:destination="@id/individualFlashcard"
+
+            app:popUpTo="@+id/fragment_flashcards"
+            app:popUpToInclusive="false"
+
+            app:enterAnim="@anim/h_slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+        <action
+            android:id="@+id/action_individualFlashcard_self2"
+            app:destination="@id/individualFlashcard"
+
+            app:popUpTo="@+id/fragment_flashcards"
+            app:popUpToInclusive="false"
+
+            app:enterAnim="@anim/h_slide_in_left"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/h_slide_in_left"
+            app:popExitAnim="@anim/h_slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.japanese_reps.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

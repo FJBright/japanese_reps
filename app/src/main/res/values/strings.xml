@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">JapaneseReps</string>
+    <string name="home">Home</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_lists">Flashcard Lists</string>
+    <string name="welcome_to_japanese_reps">Welcome to JapaneseReps</string>
+    <string name="japanese_placeholder">たんご; 単語</string>
+    <string name="english_placeholder">Word</string>
+    <string name="button_previous">Previous</string>
+    <string name="button_next">Next</string>
+    <string name="messages_header">Messages</string>
+    <string name="place_holder">place_holder</string>
+    <string name="settings_switch">Flashcard Options</string>
+    <string name="english_first">English first</string>
+    <string name="japanese_first">Japanese first</string>
+    <string name="order_of_flashcards">Order of flashcards</string>
+    <string name="normal_order">Normal Order</string>
+    <string name="reversed_order">Reversed Order</string>
+    <string name="random_order">Random Order</string>
+    <string name="final_card">Set complete</string>
+    <string name="reminder">5 minutes, take a break</string>
+    <string name="reminder_notif">Reminder for 5 minutes from now started</string>
+    <string name="flash_card_setting">Flashcard side</string>
+    <string name="saved">Setting Saved</string>
+    <string name="start">Start</string>
+    <string name="start_all_flashcards">Start All Flashcards</string>
+    <string name="all_flashcards">All Flashcards</string>
+    <string name="timer">Reminder to take a break</string>
+    <string name="nav_bar_lists">Lists</string>
+    <string name="flash_card_list">Flash Cards Overview</string>
+    <string name="see_random_words">See random Japanese words</string>
+    <string name="no_content_available">No content available!</string>
+</resources>
