@@ -1,5 +1,6 @@
 package com.example.japanese_reps.ui.lists.flashcards_list
 
+import MyDatabaseHelper
 import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context.MODE_PRIVATE
@@ -29,6 +30,7 @@ private const val ARG_PARAM2 = "LIST_ID"
 class FragmentFlashCard : Fragment(), ClickListenerFlashCard {
 
     private lateinit var binding: FragmentFlashcardsRecyclerBinding
+    private lateinit var dbHelper: MyDatabaseHelper
     private var listTitle: String? = null
     private var listID: Int? = null
 
@@ -214,6 +216,19 @@ class FragmentFlashCard : Fragment(), ClickListenerFlashCard {
                 flashCardList.add(temporaryList[i])
             }
         }
+
+        dbHelper = MyDatabaseHelper(this.requireContext())
+        // Access the database through dbHelper instance
+        val database = dbHelper.writableDatabase
+        // Perform database operations as needed
+        val dataList = dbHelper.getAllTableValues()
+        // Do something with the retrieved data
+        for (data in dataList) {
+            // Access individual values: data.id, data.english, data.romanji, etc.
+            println("ID: ${data.id}, English: ${data.english}")
+        }
+        // Remember to close the database when finished
+        dbHelper.close()
 
         val sharedPreference = this.context?.getSharedPreferences("card_ordering", MODE_PRIVATE)
         val test = sharedPreference?.getInt("flashcardOrdering",0)
