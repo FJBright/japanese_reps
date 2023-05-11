@@ -1,5 +1,6 @@
 package com.example.japanese_reps.ui.settings
 
+import MyDatabaseHelper
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.example.japanese_reps.databinding.FragmentSettingsBinding
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
+    private lateinit var dbHelper: MyDatabaseHelper
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,6 +28,22 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dbHelper = MyDatabaseHelper(this.requireContext())
+
+//        dbHelper.deleteDatabase(this)
+
+        // Access the database through dbHelper instance
+        // Perform database operations as needed
+        val dataList = dbHelper.getAllTableValues()
+        // Do something with the retrieved data
+        println("Test Here")
+        for (data in dataList) {
+            // Access individual values: data.id, data.english, data.romanji, etc.
+            println("ID: ${data.id}, English: ${data.english}")
+        }
+        // Remember to close the database when finished
+        dbHelper.close()
+
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

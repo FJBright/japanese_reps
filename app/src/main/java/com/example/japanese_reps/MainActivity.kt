@@ -56,20 +56,20 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         dbHelper = MyDatabaseHelper(this)
-
-//        dbHelper.deleteDatabase(this)
-
-        // Access the database through dbHelper instance
-        val database = dbHelper.writableDatabase
-        // Perform database operations as needed
-        val dataList = dbHelper.getAllTableValues()
-        // Do something with the retrieved data
-        for (data in dataList) {
-            // Access individual values: data.id, data.english, data.romanji, etc.
-            println("ID: ${data.id}, English: ${data.english}")
-        }
-        // Remember to close the database when finished
-        dbHelper.close()
+//
+////        dbHelper.deleteDatabase(this)
+//
+//        // Access the database through dbHelper instance
+//        // Perform database operations as needed
+//        val dataList = dbHelper.getAllTableValues()
+//        // Do something with the retrieved data
+//        println("Test Here")
+//        for (data in dataList) {
+//            // Access individual values: data.id, data.english, data.romanji, etc.
+//            println("ID: ${data.id}, English: ${data.english}")
+//        }
+//        // Remember to close the database when finished
+//        dbHelper.close()
     }
 
     // For the purposes of navigating backwards in the top left
