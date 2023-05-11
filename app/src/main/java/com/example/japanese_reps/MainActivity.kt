@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         dbHelper = MyDatabaseHelper(this)
+
+//        dbHelper.deleteDatabase(this)
+
         // Access the database through dbHelper instance
         val database = dbHelper.writableDatabase
         // Perform database operations as needed

@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.google.gson.Gson
+import kotlinx.coroutines.withContext
 
 class MyDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -12,8 +13,9 @@ class MyDatabaseHelper(context: Context) :
         private const val DATABASE_NAME = "mydatabase.db"
         private const val DATABASE_VERSION = 1
 
-        // Define your table and column names here
-        private const val TABLE_NAME = "mytable"
+        /* Words and translations table */
+        private const val WORDS_TABLE_NAME = "words"
+        // columns
         private const val COLUMN_ID = "id"
         private const val COLUMN_ENGLISH = "english"
         private const val COLUMN_ROMANJI = "romanji"
@@ -21,12 +23,55 @@ class MyDatabaseHelper(context: Context) :
         private const val COLUMN_KATAKANA = "katakana"
         private const val COLUMN_KANJI = "kanji"
         private const val COLUMN_MOST_COMMON_FORM = "most_common_form"
+
+        /* Study sets table */
+        private const val STUDY_SETS_TABLE_NAME = "study_sets"
+        // columns
+        private const val COLUMN_NAME = "name"
+        private const val COLUMN_ATTEMPTS = "attempts"
+        private const val COLUMN_COMPLETED = "completed"
+    }
+
+    private fun insertSampleStudySetData() {
+        val db = writableDatabase
+        db.beginTransaction()
+
+        try {
+            val values1 = ContentValues().apply {
+                put(COLUMN_ID, 1)
+                put(COLUMN_NAME, "Study Set 1")
+                put(COLUMN_ATTEMPTS, 5)
+                put(COLUMN_COMPLETED, 3)
+            }
+            db.insert(STUDY_SETS_TABLE_NAME, null, values1)
+
+            val values2 = ContentValues().apply {
+                put(COLUMN_ID, 2)
+                put(COLUMN_NAME, "Study Set 2")
+                put(COLUMN_ATTEMPTS, 10)
+                put(COLUMN_COMPLETED, 7)
+            }
+            db.insert(STUDY_SETS_TABLE_NAME, null, values2)
+
+            // Add more insertions as needed
+
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+        }
+
+        db.close()
+    }
+
+    fun deleteDatabase(context: Context) {
+        val dbFile = context.getDatabasePath(DATABASE_NAME)
+        dbFile.delete()
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         // Create the table
-        val createTableQuery = """
-            CREATE TABLE $TABLE_NAME (
+        val createWordsTableQuery = """
+            CREATE TABLE $WORDS_TABLE_NAME (
                 $COLUMN_ID INTEGER PRIMARY KEY,
                 $COLUMN_ENGLISH TEXT,
                 $COLUMN_ROMANJI TEXT,
@@ -34,13 +79,23 @@ class MyDatabaseHelper(context: Context) :
                 $COLUMN_KATAKANA TEXT,
                 $COLUMN_KANJI TEXT,
                 $COLUMN_MOST_COMMON_FORM TEXT
-            )
+            ); 
         """
-        db?.execSQL(createTableQuery)
+        db?.execSQL(createWordsTableQuery)
+
+        val createStudySetsTableQuery = """
+            CREATE TABLE $STUDY_SETS_TABLE_NAME (
+                $COLUMN_ID INTEGER PRIMARY KEY,
+                $COLUMN_NAME TEXT, 
+                $COLUMN_ATTEMPTS INTEGER, 
+                $COLUMN_COMPLETED INTEGER
+            );
+        """
+        db?.execSQL(createStudySetsTableQuery)
 
         // Insert data into the table
-        val insertDataQuery = """
-            INSERT INTO $TABLE_NAME ($COLUMN_ID, $COLUMN_ENGLISH, $COLUMN_ROMANJI, $COLUMN_HIRAGANA, $COLUMN_KATAKANA, $COLUMN_KANJI, $COLUMN_MOST_COMMON_FORM)
+        val insertWordsQuery = """
+            INSERT INTO $WORDS_TABLE_NAME ($COLUMN_ID, $COLUMN_ENGLISH, $COLUMN_ROMANJI, $COLUMN_HIRAGANA, $COLUMN_KATAKANA, $COLUMN_KANJI, $COLUMN_MOST_COMMON_FORM)
             VALUES
                 (1, 'Hello', 'Konnichiwa', 'こんにちは', 'コンニチハ', '今日は', 'Konnichiwa'),
                 (2, 'Goodbye', 'Sayonara', 'さようなら', 'サヨウナラ', 'さようなら', 'Sayonara'),
@@ -48,12 +103,15 @@ class MyDatabaseHelper(context: Context) :
                 (4, "Yes", "Hai", "はい", "ハイ", "はい", "Hai"),
                 (5, "No", "Iie", "いいえ", "イイエ", "いいえ", "Iie")
         """
+
+        db?.execSQL(insertWordsQuery)
+        insertSampleStudySetData()
     }
 
     fun getAllTableValues(): List<MyTableData> {
         val dataList = mutableListOf<MyTableData>()
 
-        val selectQuery = "SELECT * FROM $TABLE_NAME"
+        val selectQuery = "SELECT * FROM $WORDS_TABLE_NAME"
         val db = readableDatabase
         val cursor: Cursor? = db.rawQuery(selectQuery, null)
 
@@ -109,7 +167,7 @@ class MyDatabaseHelper(context: Context) :
                     put(COLUMN_MOST_COMMON_FORM, data.mostCommonForm)
                 }
 
-                db.insert(TABLE_NAME, null, values)
+                db.insert(WORDS_TABLE_NAME, null, values)
             }
             db.setTransactionSuccessful()
         } finally {
